@@ -1,31 +1,30 @@
 const express = require("express");
 const app = express();
 
-// VERY IMPORTANT
+// 🔥 MOST IMPORTANT LINE
 app.use(express.json());
 
-// Home route
 app.get("/", (req, res) => {
-  res.send("🤖 Desi AI is alive!");
+  res.send("🤖 Desi AI Backend is running!");
 });
 
-// Chat route
 app.post("/chat", (req, res) => {
-  const userMessage = req.body.message;
+  const { message } = req.body;
 
-  if (!userMessage) {
+  // ✅ Proper validation
+  if (!message || message.trim() === "") {
     return res.status(400).json({
-      error: "Message missing"
+      error: "Message is required"
     });
   }
 
   res.json({
-    reply: "Desi AI bolta hai: " + userMessage
+    reply: `🤖 Desi AI bolta hai: ${message}`
   });
 });
 
-// Render port fix
-const PORT = process.env.PORT || 3000;
+// Render PORT
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
+  console.log(`Server running on port ${PORT}`);
 });
